@@ -1,12 +1,21 @@
-import logo from './logo.svg';
+import Authication from "./Componets/Authication";
+import {Route,Switch} from "react-router-dom";
 import './App.css';
-import Authication from './Componets/Authication';
+import Welcome from './Componets/Pages/Welcome';
 
 function App() {
   return (
-    <div >
-     <Authication/>
-    </div>
+    <>
+    <Switch>
+    <Route path="/auth" exact>
+    <Authication/>
+    
+    </Route>
+    <Route path="/">
+      <Welcome/>
+    </Route>
+    </Switch>
+    </>
   );
 }
 

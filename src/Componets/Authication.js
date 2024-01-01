@@ -1,23 +1,35 @@
 import React,{useState} from "react";
 import  classes from './Authication.module.css'
 import Input from "./UI/Input";
+import {useHistory} from 'react-router-dom'
 const Authication=()=>{
  const [inputEmail ,setInputEmail]=useState("")
  const [password ,setPassword]=useState("")
  const [confirmPassword,setConfirmPassword]=useState("")
-
+ const [login ,setlogin]=useState(false)
+ const history=useHistory()
+  const switchModeHandler=()=>{
+   setlogin((prestate)=>!prestate)
+  }
  const SubmitHandler=async(event)=>{
   event.preventDefault()
   
-  if(inputEmail && password && confirmPassword)
+  if(inputEmail.length>0 && password)
   {
-    if(password !== confirmPassword)
+    if(password)
     {
-        alert("plzz check password")
+        let URL;
+        if(login)
+        {
+           URL ="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBC-k92hZtHMzRiGvhb1ReIWizoFNa0Q7w"
+        }
+        else{
+    URL="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBC-k92hZtHMzRiGvhb1ReIWizoFNa0Q7w"
+        }
     }
-    else{
+    
      try{   
-     const respnse=await fetch("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=YOUR_API_KEY",{
+     const respnse=await fetch(URL,{
         method:'POST',
         body:JSON.stringify({
            email:inputEmail,
@@ -28,21 +40,34 @@ const Authication=()=>{
             "Content-Type": "application/json",
         }
     })
+    
     if(respnse.ok)
     {
         const data=await respnse.json()
         console.log(data)
+        history.replace("/");
+        
+    }
+    else{
+        const data=await respnse.json()
+        throw new Error(data.error.message)
     }
     
     } catch(error){
-        console.log("error" ,error.message)
+        alert(`Authication failed ${error.message}`)
     }
-}
+
   }
+  else{
+    alert("plzz enter vaild data")
+  }
+  setInputEmail('')
+  setPassword('')
+  setConfirmPassword('')
  }
   return (<div className={classes.box}>
     <div className={classes.auth} >
-        <h1>Signup </h1>
+         <h1>{login? "login" :"signup" }</h1>
         <form onSubmit={SubmitHandler} className={classes.form}>
             <Input type="email" placeholder="email" 
             className={classes.int} value={inputEmail}
@@ -52,15 +77,16 @@ const Authication=()=>{
              className={classes.int} value={password}
               onChange={(e)=>{setPassword(e.target.value)}}/>
 
-            <Input type="password" placeholder="conform"
+           {!login && <Input type="password" placeholder="conform"
              className={classes.int} value={confirmPassword} 
-             onChange={(e)=>{setConfirmPassword(e.target.value)}}/>
+             onChange={(e)=>{setConfirmPassword(e.target.value)}}/>}
 
-      <button>Signup</button>
+      <button>{login ?" login" : "Signup"}</button>
         </form>
         
     </div>
-    <button className={classes.btn}>Have an account? Login</button>
+    <button className={classes.btn}
+     onClick={switchModeHandler}  >{login?  "Dont have an acount? signup":"Have an account? Login"}</button>
   </div>)
 }
 export default Authication;
