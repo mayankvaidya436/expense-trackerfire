@@ -1,13 +1,17 @@
-import React,{useState} from "react";
+import React,{useState,useContext} from "react";
 import  classes from './Authication.module.css'
 import Input from "./UI/Input";
-import {useHistory} from 'react-router-dom'
+
+import AuthContext from "./Store/AuthContext";
+import { useNavigate } from "react-router-dom";
 const Authication=()=>{
+    
  const [inputEmail ,setInputEmail]=useState("")
  const [password ,setPassword]=useState("")
  const [confirmPassword,setConfirmPassword]=useState("")
  const [login ,setlogin]=useState(false)
- const history=useHistory()
+ const history=useNavigate()
+ const authCtx=useContext(AuthContext)
   const switchModeHandler=()=>{
    setlogin((prestate)=>!prestate)
   }
@@ -44,8 +48,9 @@ const Authication=()=>{
     if(respnse.ok)
     {
         const data=await respnse.json()
-        console.log(data)
-        history.replace("/");
+        console.log("d",data.idToken);
+            authCtx.login(data.idToken)
+            history("/");
         
     }
     else{
