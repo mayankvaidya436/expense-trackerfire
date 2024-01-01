@@ -1,0 +1,43 @@
+.header{
+    height: 60px;
+    width: 100%;
+    background-color:whitesmoke;
+    border-bottom: 2px solid black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.com{
+    height: 30px;
+    width: 50%;
+    background-color:skyblue;
+    border-radius: 25%;
+    border: 1px solid black;
+    display: flex;
+    color: black;
+    justify-content: space-around;
+}
+.btn{
+    background-color: transparent;
+    color: black;
+text-decoration: underline;
+text-align: center;
+
+}
+.main{
+    width: 80%;
+    height: 100px;
+    margin-left: 10%;
+    background-color: white;
+    box-shadow:  grey 1px 3px 10px 5px;
+    margin-top: 2.5%;
+    justify-content: space-between;
+}
+.int{
+width:  30%;
+display: inline-block;
+
+}
+.input{
+  width: 65%;
+}
