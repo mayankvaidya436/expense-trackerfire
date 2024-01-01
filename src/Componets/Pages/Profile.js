@@ -1,3 +1,4 @@
+
 import React,{useState,useContext, useEffect} from 'react';
 import classes from './Profile.module.css';
 import AuthContext from '../Store/AuthContext';
@@ -11,7 +12,7 @@ const Profile = () => {
       const fetchData = async () => {
             try {
               const response = await fetch(
-                `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBC-k92hZtHMzRiGvhb1ReIWizoFNa0Q7w`,
+                `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyB-xCnBCx20ES2d4gAANKdQF_REddQ--dI`,
                 {
                   method: 'POST',
                   body: JSON.stringify({
@@ -40,7 +41,7 @@ const Profile = () => {
 
             try {
               const response = await fetch(
-                "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBC-k92hZtHMzRiGvhb1ReIWizoFNa0Q7w",
+                "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyB-xCnBCx20ES2d4gAANKdQF_REddQ--dI",
                 {
                   method: "POST",
                   body: JSON.stringify({
@@ -92,4 +93,4 @@ const Profile = () => {
           </form>
       );
 }
-export default Profile;
+export default Profile; 
