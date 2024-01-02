@@ -2,13 +2,13 @@ import React, { useState, useContext } from "react";
 import classes from './Authication.module.css';
 import Input from "./UI/Input";
 import AuthContext from "./Store/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 const Authication = () => {
   const [inputEmail, setInputEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   const history = useNavigate();
   const authCtx = useContext(AuthContext);
 
@@ -92,6 +92,7 @@ const Authication = () => {
           )}
 
           <button>{login ? "Login" : "Signup"}</button>
+          {login && <Link to="/ForgetPassword"> ForgetPassword</Link>}
         </form>
       </div>
       <button className={classes.btn} onClick={switchModeHandler}>
