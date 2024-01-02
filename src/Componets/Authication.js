@@ -42,7 +42,8 @@ const Authication = () => {
 
         if (response.ok) {
           const data = await response.json();
-          authCtx.login(data.idToken);
+          console.log(data)
+          authCtx.login(data.idToken,data.email);
           history("/Verifaction");
         } else {
           const data = await response.json();
