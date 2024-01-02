@@ -22,7 +22,7 @@ const AuthContext=React.createContext({
     token:token,
     isLoggedIn:userLoggedIn,
     login:loginHandler,
-    logoutHandler:logoutHandler
+    logout:logoutHandler
    }
 
     return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>

@@ -41,3 +41,12 @@ display: inline-block;
 .input{
   width: 65%;
 }
+.log{
+    background-color: skyblue;
+    border-radius: 10px;
+    margin-right: 20px;
+    text-align: center;
+}
+.log:hover{
+    background-color: blue;
+}
