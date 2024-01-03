@@ -7,7 +7,7 @@ const AuthContext=React.createContext({
 }) 
  export const AuthContextProvider=(props)=>{
     const intitalToken=localStorage.getItem("token")
-    const intialEmail=localStorage
+    const intialEmail=localStorage.getItem("email")
   const [token ,setToken]=useState(intitalToken)
   const [email, setEmail]=useState(intialEmail)
 

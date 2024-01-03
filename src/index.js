@@ -5,14 +5,16 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from './Componets/Store/AuthContext';
-
+import { EditExpenseProvider } from './Componets/Store/EditExpenseContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthContextProvider>
+    <EditExpenseProvider>
   <React.StrictMode>
     <App />
   </React.StrictMode>
+  </EditExpenseProvider>
   </AuthContextProvider>
 );
 
