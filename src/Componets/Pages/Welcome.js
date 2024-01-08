@@ -1,12 +1,16 @@
-import React,{useContext} from "react";
+import React from "react";
 import classes from './Welcome.module.css'
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../Store/AuthContext";
+import { authActions } from "../Store/auth-slice";
+import { useDispatch } from "react-redux";
 const Welcome=()=>{
-   const authCtx=useContext(AuthContext)
+   //const authCtx=useContext(AuthContext)
+   const dispatch = useDispatch()
    const history=useNavigate()
   const logoutHandler=()=>{
-    authCtx.logout();
+    dispatch(authActions.logout())
+    //authCtx.logout();
     history("/")
   }
      return (<>

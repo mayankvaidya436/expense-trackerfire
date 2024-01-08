@@ -1,21 +1,24 @@
-import React,{useState,useContext,useEffect} from "react";
+import React,{useState,useEffect} from "react";
 import Input from "../UI/Input";
 import classes from './InputExpenses.module.css'
-import AuthContext from "../Store/AuthContext";
-import EditExpenseContext from "../Store/EditExpenseContext";
-const InputExpenses=(props)=>{
-  const [id,setId]=useState(null)
+import { expenseAction } from "../Store/expense-slice";
+import { useSelector,useDispatch } from "react-redux";
+
+  const InputExpense = () => {
+    const dispatch = useDispatch();
+    const [id,setId] = useState('');
+
 const  [price, setPrice]=useState();
 const  [desc,setDes]=useState();
-const  [category, setCategory]=useState();
+const  [category, setCategory]=useState("Select Category");
  
-const authCtx=useContext(AuthContext)
-console.log(authCtx);
+const email = useSelector((state)=>state.auth.userId)
+const removedAt = email.replace('@', '');
+const sanitizedEmail = removedAt.replace('.', ''); 
 
-const removedAt = authCtx.email.replace(/[@.]/g,"");
-  const sanitizedEmail = removedAt.replace(/[@.]/g,"");
+const EditCtx = useSelector((state) => state.expense.editOB);
 
-  const EditCtx=useContext(EditExpenseContext)
+  
 
   useEffect(() => {
     setId(EditCtx.id);
@@ -66,8 +69,9 @@ const removedAt = authCtx.email.replace(/[@.]/g,"");
       const updateData = await updateResponse.json();
 
       if (updateData) {
-        EditCtx.setUpdatedData(true);
+        
         console.log("PUT Successful");
+        dispatch(expenseAction.setReRender({ reRender: true }));
       } else {
         console.log("PUT Failed");
       }
@@ -79,14 +83,14 @@ const removedAt = authCtx.email.replace(/[@.]/g,"");
 const handleFormSubmit=async(event)=>{
   event.preventDefault();
   const expensedata={
-    id:Date.now(),
+    id: id || Date.now(),
     price,
     description:desc,
     category
   };
 
   if (id) {
-    await editData(id, expensedata);
+     editData(id, expensedata);
   }  else{
 
 const response=await fetch(`https://expenses-217b7-default-rtdb.firebaseio.com/expense${sanitizedEmail}.json`,{
@@ -105,9 +109,9 @@ const response=await fetch(`https://expenses-217b7-default-rtdb.firebaseio.com/e
 
 
 
-  props.addExpenses(expensedata)
-  console.log(expensedata)
-  setCategory('')
+dispatch(expenseAction.addExpense(expensedata))
+  //console.log(expensedata)
+  setCategory("Select Category");
   setDes('')
   setPrice('')
   setId(null)
@@ -144,4 +148,4 @@ const response=await fetch(`https://expenses-217b7-default-rtdb.firebaseio.com/e
      
     </>)
 }
-export default InputExpenses;
+export default InputExpense;

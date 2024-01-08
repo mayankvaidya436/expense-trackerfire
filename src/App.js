@@ -7,13 +7,16 @@ import AuthContext from "./Componets/Store/AuthContext";
 import Root from "./Componets/Pages/Root";
 import Verifaction from "./Componets/Pages/Verifaction";
 import ForgetPassword from "./Componets/Pages/ForgetPassword";
+import { useSelector } from "react-redux";
 
 function App() {
-  const authCtx=useContext(AuthContext)
+ // const authCtx=useContext(AuthContext)
+  const isLoggedIn =  useSelector((state)=>state.auth.isLoggedIn)
+console.log("APPP",isLoggedIn)
   return (
     <BrowserRouter>
     <Routes>
-      <Route path='/' element={!authCtx.isLoggedIn ? <Authication/> : <Root/>} />
+      <Route path='/' element={!isLoggedIn ? <Authication/> : <Root/>} />
       <Route path="/ForgetPassword" element={<ForgetPassword/>}/>
       <Route path='/Verifaction' element={<Verifaction/>}/>
       <Route path='/Profile' element={<Profile/>} />

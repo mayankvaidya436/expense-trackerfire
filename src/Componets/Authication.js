@@ -3,14 +3,16 @@ import classes from './Authication.module.css';
 import Input from "./UI/Input";
 import AuthContext from "./Store/AuthContext";
 import { useNavigate,Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { authActions } from "./Store/auth-slice";
 const Authication = () => {
+  const dispatch = useDispatch();
   const [inputEmail, setInputEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [login, setLogin] = useState(true);
   const history = useNavigate();
-  const authCtx = useContext(AuthContext);
+  //const authCtx = useContext(AuthContext);
 
   const switchModeHandler = () => {
     setLogin((prevState) => !prevState);
@@ -43,7 +45,10 @@ const Authication = () => {
         if (response.ok) {
           const data = await response.json();
           console.log(data)
-          authCtx.login(data.idToken,data.email);
+          //authCtx.login(data.idToken,data.email);
+          const idToken = data.idToken;
+          const userId = data.email;
+          dispatch(authActions.login({ idToken, userId }));
           history("/Verifaction");
         } else {
           const data = await response.json();

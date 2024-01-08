@@ -1,10 +1,13 @@
 import Welcome from "./Welcome";
-import Body from "./Body";
+
+import InputExpenses from "../InputExpenses/InputExpenses";
+import OutputExpenses from "../OutputExpenses/OutputExpenses";
 const Root = () => {
       return (
             <>
             <Welcome/>
-            <Body/>
+            <InputExpenses/>
+            <OutputExpenses/>
             </>
       );
 };
