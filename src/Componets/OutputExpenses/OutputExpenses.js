@@ -1,6 +1,6 @@
-import React,{useEffect} from "react";
+import React,{Fragment, useEffect} from "react";
 import classes from './OutputExpenses.module.css'
-import EditExpenseContext from "../Store/EditExpenseContext";
+import { enableDarkTheme } from "../Store/themeSlice";
 import { useSelector,useDispatch } from "react-redux";
 import { expenseAction } from "../Store/expense-slice";
 const OutputExpense = () => {
@@ -92,16 +92,32 @@ const OutputExpense = () => {
   }
     console.log("AK",expenses)
 
+    const enableHandler = () => {
+      dispatch(enableDarkTheme({isDarkThemeEnable:true}));
+    };
+    const isTheme = useSelector((state)=>state.theme.isDarkTheme)
+
+    const downloadFileHandler = () => {
+        const csvContent =
+          "data:text/csv;charset=utf-8," +
+          expenses.map((expense) => Object.values(expense).join(",")).join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "expenses.csv");
+        document.body.appendChild(link);
+        link.click();
+    };
+
       
 
-  return (<>
-    <div className={classes.main}>
+  return  <Fragment><div className={`${classes.main} ${isTheme ? classes.dark : ''}`}>
   <h2 className={classes.header}> Expnse list</h2>
   {expenses.length===0 ? <p>no expnse add yet</p>:
   (
     <ul className={classes.ul}>
     {expenses.map((expense) => (
-      <li key={expense.id} className={classes.li}>
+      <li key={expense.id} className={`${classes.li}  ${isTheme ? classes.dark : ''}`}>
         <div className={classes.box}>{expense.description}</div> 
         <div className={classes.boxs}><p>{expense.price}₹</p>
        <p>{expense.category} </p></div>
@@ -113,15 +129,21 @@ const OutputExpense = () => {
     ))}
   </ul>
   )}
+  {expenses.length > 0 && 
+          <div className={classes.downloadBtn}>
+        <button className={classes.btn} onClick={downloadFileHandler} >Download csv</button>
+        </div>
+        }
      
     </div>
-     <span className={classes.sidebar}>
+     
+     <span className={`${classes.sidebar}  ${isTheme ? classes.dark : ''}`}>
      <h3 className={classes.sideHeading}>Total Amount</h3>
      {/* Display the calculated totalAmount */}
      <h1 className={classes.totalAmount}> {totalAmount}₹</h1>
-     {totalAmount > 10000 && <button className={classes.newBtn}>Active Premium</button>}
+     {totalAmount > 10000 && <button onClick={enableHandler} className={classes.newBtn}>Active Premium</button>}
    </span>
-   </>
-  )
+   </Fragment>
+  
 }
 export default OutputExpense

@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import classes from './Authication.module.css';
 import Input from "./UI/Input";
-import AuthContext from "./Store/AuthContext";
+
 import { useNavigate,Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "./Store/auth-slice";
+import Welcome from "./Pages/Welcome";
 const Authication = () => {
   const dispatch = useDispatch();
   const [inputEmail, setInputEmail] = useState("");
@@ -67,6 +68,7 @@ const Authication = () => {
   };
 
   return (
+    <><Welcome/>
     <div className={classes.box}>
       <div className={classes.auth}>
         <h1>{login ? "Login" : "Signup"}</h1>
@@ -105,6 +107,7 @@ const Authication = () => {
         {login ? "Don't have an account? Signup" : "Have an account? Login"}
       </button>
     </div>
+    </>
   );
 };
 

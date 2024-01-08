@@ -117,8 +117,10 @@ dispatch(expenseAction.addExpense(expensedata))
   setId(null)
 
 }
+
+const isTheme = useSelector((state)=>state.theme.isDarkTheme)
     return (<> 
-    <form className={classes.main} onSubmit={handleFormSubmit}>
+    <form className={`${classes.main} ${isTheme ? classes.dark : ''}`} onSubmit={handleFormSubmit}>
         <div className={classes.body}>
 
             <div className={classes.input}>
