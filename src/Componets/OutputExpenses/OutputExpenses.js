@@ -92,7 +92,10 @@ const OutputExpense = () => {
   }
     console.log("AK",expenses)
 
+   
+
     const enableHandler = () => {
+      console.log("enable")
       dispatch(enableDarkTheme({isDarkThemeEnable:true}));
     };
     const isTheme = useSelector((state)=>state.theme.isDarkTheme)
@@ -109,6 +112,11 @@ const OutputExpense = () => {
         link.click();
     };
 
+    const btnHandler=()=>{
+      console.log("hello")
+      console.log("enable")
+      dispatch(enableDarkTheme({isDarkThemeEnable:true}));
+    }
       
 
   return  <Fragment><div className={`${classes.main} ${isTheme ? classes.dark : ''}`}>
@@ -141,7 +149,7 @@ const OutputExpense = () => {
      <h3 className={classes.sideHeading}>Total Amount</h3>
      {/* Display the calculated totalAmount */}
      <h1 className={classes.totalAmount}> {totalAmount}₹</h1>
-     {totalAmount > 10000 && <button onClick={enableHandler} className={classes.newBtn}>Active Premium</button>}
+     {totalAmount > 10000 && <button onClick={btnHandler} className={classes.newBtn}>Active Premium</button>}
    </span>
    </Fragment>
   
